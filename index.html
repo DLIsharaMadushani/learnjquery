@@ -6,7 +6,7 @@
     <title>DOM Assignment 1</title>
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/customer-view-style.css" rel="stylesheet">
     <script defer src="node_modules/jquery/dist/jquery.min.js"></script>
     <script defer src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script defer src="js/cutomer-view-ctrl.js"></script>
@@ -56,6 +56,7 @@
             </form>
         </div>
         <div class="col-12 col-lg-8 d-flex flex-column align-items-center">
+            <div id="tbl-wrapper">
             <table class="table table-hover table-bordered table-striped" id="tbl-customers">
                 <thead>
                 <tr>
@@ -75,6 +76,7 @@
                 </tr>
                 </tfoot>
             </table>
+            </div>
             <nav>
                 <ul class="pagination">
                     <li class="page-item">

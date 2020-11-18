@@ -14,10 +14,7 @@
  *   0. You just DO WHAT THE FUCK YOU WANT TO.
  */
 
-/**
- * @author : Ranjith Suranga <suranga@ijse.lk>
- * @since : 11/15/20
-**/
+
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
@@ -64,6 +61,14 @@ main {
     background-color: rgb(251, 181, 52);
   }
 
+  #tbl-wrapper{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
   #tbl-customers {
 
     thead tr {
@@ -71,6 +76,7 @@ main {
 
       th {
         border-bottom-color: #989898;
+        box-shadow: #fbb534 0 0 15px 0px;
       }
     }
 
@@ -90,6 +96,19 @@ main {
     }
   }
 }
+
+.trash {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url("../img/trash.png");
+  background-size: contain;
+
+  &:hover {
+    background-image: url("../img/trash-hover.png");
+  }
+}
+
 
 /*===============================================================================
  * Footer

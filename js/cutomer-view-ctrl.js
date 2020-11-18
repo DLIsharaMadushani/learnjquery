@@ -17,6 +17,10 @@ function init(){
     $("#txt-id").focus();
 }
 
+/*===============================================================================
+ * Event Handlers and Timers
+ *===============================================================================*/
+
 $('#btn-save').click(function (){
     saveCustomer(new Customer($("#txt-id").val(), $("#txt-name").val(),$("#txt-address").val()));
     $("#btn-clear").click();
@@ -45,11 +49,11 @@ $("#txt-id").focusout(function (){
         isCxIdValid=false;
         $("#txt-id").addClass("is-invalid");
     }else{
-            isCxIdValid=true;
-            $("#txt-id").addClass("is-valid");
-            $("#helper-txt-id").removeClass("invalid-feedback");
-            $("#helper-txt-id").addClass("text-muted");
-        }
+        isCxIdValid=true;
+        $("#txt-id").addClass("is-valid");
+        $("#helper-txt-id").removeClass("invalid-feedback");
+        $("#helper-txt-id").addClass("text-muted");
+    }
 
     enableSaveBtn();
 });
@@ -98,12 +102,6 @@ $("#txt-address").focusout(function (){
 
 
 /*===============================================================================
- * Event Handlers and Timers
- *===============================================================================*/
-
-// Todo: add all event listeners and handlers here
-
-/*===============================================================================
  * Functions
  *===============================================================================*/
 
@@ -144,13 +142,12 @@ function saveCustomer(customer){
         '<td>'+customer.getId()+'</td>' +
         '<td>'+customer.getName()+'</td>' +
         '<td>'+customer.getAddress()+'</td>' +
-        '<td><button type="button" class="btn btn-warning">Delete</button></td>' +
+        '<td><div class="trash"></div></td>' +
         '</tr>'
-    console.log(markup);
     $("#tbl-customers tbody").append(markup);
     customers.push(customer);
     viewTableFooter();
-    $("#tbl-customers tbody button").click(function (){
+    $("#tbl-customers tbody div").click(function (){
       var row=$(this).parents()[1];
       deleteCustomer(row);
     })
