@@ -117,7 +117,6 @@ function enableSaveBtn(){
 
 function isCustomerIdExists(id){
     for (var customer of customers) {
-        console.log(customer.id+" "+id);
         if(customer.id === id.trim()){
             $("#alert-duplicateId").attr('hidden',false);
             $("#alert-duplicateId").fadeIn(2000);
@@ -150,7 +149,25 @@ function saveCustomer(customer){
     console.log(markup);
     $("#tbl-customers tbody").append(markup);
     customers.push(customer);
+    $("#tbl-customers tbody button").click(function (){
+      var row=$(this).parents()[1];
+      deleteCustomer(row);
+    })
 }
+
+function deleteCustomer(row){
+    var deleteCxId=$(row.firstChild).text();
+    for (var i = 0; i < customers.length; i++) {
+        if(customers[i].id === deleteCxId){
+            customers.splice(i,1);
+            $(row).remove();
+            console.log(customers);
+            return ;
+        }
+    }
+}
+
+
 
 class Customer{
     constructor(id, name, address) {
