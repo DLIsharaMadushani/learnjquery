@@ -7,6 +7,9 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script defer src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script defer src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="js/cutomer-view-ctrl.js"></script>
 </head>
 <body>
 <header class="container">
@@ -24,21 +27,27 @@
                 <div class="form-group">
                     <label for="txt-id">Customer ID</label>
                     <input class="form-control" id="txt-id" placeholder="Eg. C001" type="text">
-                    <small class="form-text text-muted">
+                    <small class="form-text text-muted" id="helper-txt-id">
                         The Customer ID should follow the pattern CXXX; X={0-9}
                     </small>
                 </div>
                 <div class="form-group">
                     <label for="txt-name">Customer Name</label>
                     <input class="form-control" id="txt-name" placeholder="Eg. Lucky Prabath" type="text">
+                    <small class="form-text text-muted" id="helper-txt-name">
+                        The Customer name should have minimum 3 characters.
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="txt-address">Customer Address</label>
                     <input class="form-control" id="txt-address" placeholder="Eg. #1234, Main St, Gampaha" type="text">
+                    <small class="form-text text-muted" id="helper-txt-address">
+                        The Customer address should have minimum 3 characters.
+                    </small>
                 </div>
                 <hr>
                 <div class="form-group">
-                    <button class="btn btn-primary" id="btn-save">Save</button>
+                    <button type="button" class="btn btn-primary" id="btn-save" disabled>Save</button>
                     <button class="btn btn-danger" id="btn-clear" type="reset">Clear</button>
                 </div>
             </form>
@@ -84,8 +93,8 @@
     </div>
 </main>
 <footer>
-    Copyright &copy; 2020 IJSE
+    Copyright &copy; 2020 ISHARA
 </footer>
-<script src="js/customer-ctrl.js"></script>
+
 </body>
 </html>
