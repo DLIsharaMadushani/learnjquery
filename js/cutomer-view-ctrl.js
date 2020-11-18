@@ -149,6 +149,7 @@ function saveCustomer(customer){
     console.log(markup);
     $("#tbl-customers tbody").append(markup);
     customers.push(customer);
+    viewTableFooter();
     $("#tbl-customers tbody button").click(function (){
       var row=$(this).parents()[1];
       deleteCustomer(row);
@@ -161,12 +162,15 @@ function deleteCustomer(row){
         if(customers[i].id === deleteCxId){
             customers.splice(i,1);
             $(row).remove();
-            console.log(customers);
+            viewTableFooter();
             return ;
         }
     }
 }
 
+function viewTableFooter(){
+    $("#tbl-customers tbody tr").length > 0 ? $("#tbl-customers tfoot").hide(): $("#tbl-customers tfoot").show();
+}
 
 
 class Customer{
