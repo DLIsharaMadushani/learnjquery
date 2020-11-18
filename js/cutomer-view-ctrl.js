@@ -5,6 +5,7 @@
 var isCxIdValid=false;
 var isCxNameValid=false;
 var isCxAddValid=false;
+var customers=[];
 
 /*===============================================================================
  * Init
@@ -14,22 +15,22 @@ init();
 
 function init(){
     $("#txt-id").focus();
-
 }
 
 $('#btn-save').click(function (){
-
+    saveCustomer(new Customer($("#txt-id").val(), $("#txt-name").val(),$("#txt-address").val()));
+    $("#btn-clear").click();
 });
 
 $("#btn-clear").click(function (){
     clearInputs();
-})
-;
+});
 
 $("#txt-id").focus(function (){
     $("#txt-id").removeClass("is-invalid");
     $("#txt-id").removeClass("is-valid");
     $("#helper-txt-id").addClass("text-muted");
+    $("#alert-duplicateId").attr('hidden',true);
 });
 
 $("#txt-id").focusout(function (){
@@ -38,12 +39,18 @@ $("#txt-id").focusout(function (){
         $("#txt-id").addClass("is-invalid");
         $("#helper-txt-id").addClass("invalid-feedback");
         $("#helper-txt-id").removeClass("text-muted");
-    }else{
-        isCxIdValid=true;
-        $("#txt-id").addClass("is-valid");
-        $("#helper-txt-id").removeClass("invalid-feedback");
-        $("#helper-txt-id").addClass("text-muted");
+        return;
     }
+    if(isCustomerIdExists($("#txt-id").val())) {
+        isCxIdValid=false;
+        $("#txt-id").addClass("is-invalid");
+    }else{
+            isCxIdValid=true;
+            $("#txt-id").addClass("is-valid");
+            $("#helper-txt-id").removeClass("invalid-feedback");
+            $("#helper-txt-id").addClass("text-muted");
+        }
+
     enableSaveBtn();
 });
 
@@ -108,7 +115,19 @@ function enableSaveBtn(){
     }
 }
 
-function clearInputs(){
+function isCustomerIdExists(id){
+    for (var customer of customers) {
+        console.log(customer.id+" "+id);
+        if(customer.id === id.trim()){
+            $("#alert-duplicateId").attr('hidden',false);
+            $("#alert-duplicateId").fadeIn(2000);
+            return true;
+        }
+    }
+    return false;
+}
+
+function clearInputs(Customer){
     isCxIdValid=false;
     isCxNameValid=false;
     isCxAddValid=false;
@@ -119,4 +138,35 @@ function clearInputs(){
     $("#txt-name").removeClass("is-invalid");
     $("#txt-address").removeClass("is-invalid");
     enableSaveBtn();
+}
+
+function saveCustomer(customer){
+    var markup = '<tr>' +
+        '<td>'+customer.getId()+'</td>' +
+        '<td>'+customer.getName()+'</td>' +
+        '<td>'+customer.getAddress()+'</td>' +
+        '<td><button type="button" class="btn btn-warning">Delete</button></td>' +
+        '</tr>'
+    console.log(markup);
+    $("#tbl-customers tbody").append(markup);
+    customers.push(customer);
+}
+
+class Customer{
+    constructor(id, name, address) {
+        this.id=id;
+        this.name=name;
+        this.address=address;
+    }
+    getId(){
+        return this.id;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getAddress(){
+        return this.address;
+    }
 }
