@@ -30,6 +30,12 @@ html {
   font-size: 14px;
 }
 
+body{
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 50px;
+}
+
 
 /*===============================================================================
  * Header
@@ -49,9 +55,12 @@ header {
 main {
   margin-top: 50px;
 
-  .row > div:first-child {
-    border-right: 1px solid lightgray;
+  @media all and (min-width: 992px) {
+    .row > div:first-child {
+      border-right: 1px solid lightgray;
+    }
   }
+
 
   h3 {
     padding: 10px;
@@ -80,16 +89,23 @@ main {
       }
     }
 
+    tbody tr {
+      cursor: pointer;
+    };
+
     td {
       vertical-align: middle;
     }
 
-    th:first-child {
+    th:first-child,
+    td:first-child{
+      position: relative;
       width: 75px;
       text-align: center;
     }
 
-    th:last-child {
+    th:last-child,
+    td:last-child {
       position: relative;
       width: 75px;
       text-align: center;
@@ -107,6 +123,10 @@ main {
   &:hover {
     background-image: url("../img/trash-hover.png");
   }
+}
+
+.hidden {
+  visibility: hidden !important;
 }
 
 

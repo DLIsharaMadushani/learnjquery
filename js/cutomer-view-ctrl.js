@@ -23,7 +23,7 @@ function init(){
 
 $('#btn-save').click(function (){
     saveCustomer(new Customer($("#txt-id").val(), $("#txt-name").val(),$("#txt-address").val()));
-    $("#btn-clear").click();
+    //$("#btn-clear").click();
 });
 
 $("#btn-clear").click(function (){
@@ -146,7 +146,11 @@ function saveCustomer(customer){
         '</tr>'
     $("#tbl-customers tbody").append(markup);
     customers.push(customer);
+    console.log($("tbody").height());
+    console.log($("tbody").offset().top);
+
     viewTableFooter();
+    viewPageNavigation()
     $("#tbl-customers tbody div").click(function (){
       var row=$(this).parents()[1];
       deleteCustomer(row);
@@ -159,7 +163,10 @@ function deleteCustomer(row){
         if(customers[i].id === deleteCxId){
             customers.splice(i,1);
             $(row).remove();
+            console.log($("tbody").height());
+            $("tbody").offset().top
             viewTableFooter();
+            viewPageNavigation()
             return ;
         }
     }
@@ -169,6 +176,19 @@ function viewTableFooter(){
     $("#tbl-customers tbody tr").length > 0 ? $("#tbl-customers tfoot").hide(): $("#tbl-customers tfoot").show();
 }
 
+function viewPageNavigation(){
+    var tbodyViewHeight=$("body").height() - $("tbody").offset().top - $("nav").height() - 15;
+    if($("tbody").height() > tbodyViewHeight){
+        $("#page-navigation-bar").removeClass("hidden");
+    }else{
+        $("#page-navigation-bar").addClass("hidden");
+    }
+}
+
+
+/*===============================================================================
+ * Classes
+ *===============================================================================*/
 
 class Customer{
     constructor(id, name, address) {
