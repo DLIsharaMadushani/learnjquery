@@ -8,6 +8,7 @@ var isCxAddValid=false;
 var customers=[];
 var pageSize=-1;
 var currentPageGroup=1;
+var updatingRow=null;
 
 /*===============================================================================
  * Init
@@ -25,7 +26,7 @@ function init(){
 
 $('#btn-save').click(function (){
     saveCustomer(new Customer($("#txt-id").val(), $("#txt-name").val(),$("#txt-address").val()));
-    //$("#btn-clear").click();
+    $("#btn-clear").click();
 });
 
 $("#btn-clear").click(function (){
@@ -40,6 +41,7 @@ $("#txt-id").focus(function (){
 });
 
 $("#txt-id").focusout(function (){
+
     if (!$("#txt-id").val().match(/^C\d{3}$/)){
         isCxIdValid=false;
         $("#txt-id").addClass("is-invalid");
@@ -67,6 +69,9 @@ $("#txt-name").focus(function (){
 });
 
 $("#txt-name").focusout(function (){
+    if($("#btn-save").text() === "Update"){
+        isCxIdValid=true;
+    }
     if (!$("#txt-name").val().match(/^[A-za-z][A-Za-z .]{3,}$/)){
         isCxNameValid=false;
         $("#txt-name").addClass("is-invalid");
@@ -88,6 +93,9 @@ $("#txt-address").focus(function (){
 });
 
 $("#txt-address").focusout(function (){
+    if($("#btn-save").text() === "Update"){
+        isCxIdValid=true;
+    }
     if ($("#txt-address").val().trim().length < 4){
         isCxAddValid=false;
         $("#txt-address").addClass("is-invalid");
@@ -141,21 +149,45 @@ function clearInputs(Customer){
     $("#txt-id").removeClass("is-invalid");
     $("#txt-name").removeClass("is-invalid");
     $("#txt-address").removeClass("is-invalid");
+    $("#btn-save").text("Save");
+    $("#txt-id").prop('disabled',false);
+    updatingRow=null;
     enableSaveBtn();
 }
 
 function saveCustomer(customer){
-    createRow(customer);
-    customers.push(customer);
+    if($("#btn-save").text() === "Update"){
+        updateCustomer(customer);
+    }else{
+        createRow(customer);
+        customers.push(customer);
 
-    selectPageGroup();
-    console.log($("tbody").height());
-    console.log($("tbody").offset().top);
+        selectPageGroup();
+        console.log($("tbody").height());
+        console.log($("tbody").offset().top);
 
-    viewTableFooter();
-    calculatePageSize()
-    viewPaginations();
+        viewTableFooter();
+        calculatePageSize()
+        viewPaginations();
+    }
+}
 
+function updateCustomer(customer){
+    for (var cx of customers) {
+        if(cx.id === customer.id){
+            cx.name=customer.name;
+            cx.address=customer.address;
+            updateRow(cx);
+            return ;
+        }
+    }
+}
+
+function updateRow(customer){
+        let td = $(updatingRow).find("td");
+        $(td[1]).text(customer.name);
+        $(td[2]).text(customer.address);
+        console.log($(td[1]).text())
 }
 
 function selectPageGroup(){
@@ -257,7 +289,6 @@ function viewPaginations(){
                     currentPageGroup++;
                     viewPaginations();
                 }
-
             });
 
         }
@@ -302,11 +333,19 @@ function createRow(customer){
         var row=$(this).parents()[1];
         deleteCustomer(row);
     });
+    $("#tbl-customers tbody tr").click(function (){
+        let td = $(this).find("td");
+        $(this).addClass("selectedRow");
+        $("#txt-id").val($(td[0]).text());
+        $("#txt-id").attr('disabled',true);
+        $("#txt-name").val($(td[1]).text());
+        $("#txt-address").val($(td[2]).text());
+        $("#btn-save").text("Update");
+        updatingRow=$(this);
+
+    });
 }
 
-function setActivePage(pageNo){
-    alert(pageNo);
-}
 
 
 /*===============================================================================
