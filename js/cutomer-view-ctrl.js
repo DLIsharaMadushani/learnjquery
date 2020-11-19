@@ -9,6 +9,31 @@ var customers=[];
 var pageSize=-1;
 var currentPageGroup=1;
 var updatingRow=null;
+var groupChanged=false;
+
+
+/*===============================================================================
+ * Classes
+ *===============================================================================*/
+
+class Customer{
+    constructor(id, name, address) {
+        this.id=id;
+        this.name=name;
+        this.address=address;
+    }
+    getId(){
+        return this.id;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getAddress(){
+        return this.address;
+    }
+}
 
 /*===============================================================================
  * Init
@@ -18,6 +43,7 @@ init();
 
 function init(){
     $("#txt-id").focus();
+    insertTestData();
 }
 
 /*===============================================================================
@@ -110,12 +136,6 @@ $("#txt-address").focusout(function (){
     enableSaveBtn();
 });
 
-$("#page-navigation-bar ul li").click(function (){
-   alert("clicked page : ");
-});
-
-
-
 /*===============================================================================
  * Functions
  *===============================================================================*/
@@ -191,6 +211,7 @@ function updateRow(customer){
 }
 
 function selectPageGroup(){
+    groupChanged=false;
     if(pageSize !== -1){
         currentPageGroup=Math.ceil(customers.length/(5*pageSize));
     }
@@ -230,7 +251,7 @@ function viewPaginations(){
     let customersCount = customers.length;
     if(pageSize === -1 || customersCount <= pageSize) {
         console.log(pageSize + " *** " + customersCount);
-       //renderPage(1);
+       renderPage(1);
         $("#page-navigation-bar").addClass("hidden");
         return;
     }
@@ -247,7 +268,7 @@ function viewPaginations(){
 
 
 
-        if(customersCount % pageSize === 1 || customersCount % pageSize === 0){
+        if(customersCount % pageSize === 1 || customersCount % pageSize === 0 || groupChanged){
             $("#page-navigation-bar ul").empty();
             var noOfPages=Math.ceil(customersCount/pageSize);
             var startingPage=(currentPageGroup-1)*5 + 1;;
@@ -255,7 +276,7 @@ function viewPaginations(){
             if(currentPageGroup*5*pageSize < customers.length){
                 noOfPages=startingPage+4;
             }
-
+            console.log("NoOfPages : "+noOfPages);
             for (var i = startingPage; i <= noOfPages; i++) {
                 if(i === noOfPages){
                     firstPageHtml += '<li class="page-item active"><a class="page-link" href="#" >'+i+'</a></li>';
@@ -274,19 +295,18 @@ function viewPaginations(){
             });
 
             $("#li-backward-pages").click(function (){
-                alert("Previous page group");
                 if(currentPageGroup > 1){
                     currentPageGroup--;
+                    groupChanged=true;
                     viewPaginations();
                 }
-
             });
 
 
             $("#li-forward-pages").click(function (){
-                alert("Next page group");
                 if(currentPageGroup*5*pageSize < customers.length){
                     currentPageGroup++;
+                    groupChanged=true;
                     viewPaginations();
                 }
             });
@@ -346,27 +366,57 @@ function createRow(customer){
     });
 }
 
+function insertTestData(){
+    saveCustomer(new Customer("C001","Ishara","GAlle"));
+    saveCustomer(new Customer("C002","Ishara","GAlle"));
+    saveCustomer(new Customer("C003","Ishara","GAlle"));
+    saveCustomer(new Customer("C004","Ishara","GAlle"));
+    saveCustomer(new Customer("C005","Ishara","GAlle"));
+    saveCustomer(new Customer("C006","Ishara","GAlle"));
+    saveCustomer(new Customer("C007","Ishara","GAlle"));
+    saveCustomer(new Customer("C008","Ishara","GAlle"));
+    saveCustomer(new Customer("C009","Ishara","GAlle"));
+    saveCustomer(new Customer("C010","Ishara","GAlle"));
+    saveCustomer(new Customer("C011","Ishara","GAlle"));
+    saveCustomer(new Customer("C012","Ishara","GAlle"));
+    saveCustomer(new Customer("C013","Ishara","GAlle"));
+    saveCustomer(new Customer("C014","Ishara","GAlle"));
+    saveCustomer(new Customer("C015","Ishara","GAlle"));
+    saveCustomer(new Customer("C016","Ishara","GAlle"));
+    saveCustomer(new Customer("C017","Ishara","GAlle"));
+    saveCustomer(new Customer("C018","Ishara","GAlle"));
+    saveCustomer(new Customer("C019","Ishara","GAlle"));
+    saveCustomer(new Customer("C020","Ishara","GAlle"));
+    saveCustomer(new Customer("C021","Ishara","GAlle"));
+    saveCustomer(new Customer("C022","Ishara","GAlle"));
+    saveCustomer(new Customer("C023","Ishara","GAlle"));
+    saveCustomer(new Customer("C024","Ishara","GAlle"));
+    saveCustomer(new Customer("C025","Ishara","GAlle"));
+    saveCustomer(new Customer("C026","Ishara","GAlle"));
+    saveCustomer(new Customer("C027","Ishara","GAlle"));
+    saveCustomer(new Customer("C028","Ishara","GAlle"));
+    saveCustomer(new Customer("C029","Ishara","GAlle"));
+    saveCustomer(new Customer("C030","Ishara","GAlle"));
+    saveCustomer(new Customer("C031","Ishara","GAlle"));
+    saveCustomer(new Customer("C032","Ishara","GAlle"));
+    saveCustomer(new Customer("C033","Ishara","GAlle"));
+    saveCustomer(new Customer("C034","Ishara","GAlle"));
+    saveCustomer(new Customer("C035","Ishara","GAlle"));
+    saveCustomer(new Customer("C036","Ishara","GAlle"));
+    saveCustomer(new Customer("C037","Ishara","GAlle"));
+    saveCustomer(new Customer("C038","Ishara","GAlle"));
+    saveCustomer(new Customer("C039","Ishara","GAlle"));
+    saveCustomer(new Customer("C040","Ishara","GAlle"));
+    saveCustomer(new Customer("C041","Ishara","GAlle"));
+   saveCustomer(new Customer("C042","Ishara","GAlle"));
+    saveCustomer(new Customer("C043","Ishara","GAlle"));
+    saveCustomer(new Customer("C044","Ishara","GAlle"));
+    saveCustomer(new Customer("C045","Ishara","GAlle"));
+    saveCustomer(new Customer("C046","Ishara","GAlle"));
+    saveCustomer(new Customer("C047","Ishara","GAlle"));
+    saveCustomer(new Customer("C048","Ishara","GAlle"));
+    saveCustomer(new Customer("C049","Ishara","GAlle"));
+    saveCustomer(new Customer("C050","Ishara","GAlle"));
 
 
-/*===============================================================================
- * Classes
- *===============================================================================*/
-
-class Customer{
-    constructor(id, name, address) {
-        this.id=id;
-        this.name=name;
-        this.address=address;
-    }
-    getId(){
-        return this.id;
-    }
-
-    getName(){
-        return this.name;
-    }
-
-    getAddress(){
-        return this.address;
-    }
 }
