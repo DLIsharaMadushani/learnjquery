@@ -14,8 +14,6 @@
  *   0. You just DO WHAT THE FUCK YOU WANT TO.
  */
 
-
-
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
 /*===============================================================================
@@ -31,8 +29,8 @@ html {
   height: 100%;
 }
 
-body{
-  min-height : 100%;
+body {
+  min-height: 100%;
   position: relative;
   padding-bottom: 50px;
 }
@@ -59,7 +57,7 @@ main {
 
   @media all and (min-width: 992px) {
     .row > div:first-child {
-      border-right: 1px solid lightgray;
+      border-right: 1px solid darkgrey;
     }
   }
 
@@ -72,16 +70,15 @@ main {
     background-color: rgb(251, 181, 52);
   }
 
-  #tbl-wrapper{
+  #tbl-wrapper {
     width: 100%;
     height: auto;
     overflow: hidden;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
   }
 
   #tbl-customers {
-
     thead tr {
       background-color: lightgrey;
 
@@ -93,14 +90,19 @@ main {
 
     tbody tr {
       cursor: pointer;
-    };
+
+      &:hover {
+        background-color: lightpink;
+      }
+    }
+  ;
 
     td {
       vertical-align: middle;
     }
 
     th:first-child,
-    td:first-child{
+    td:first-child {
       position: relative;
       width: 75px;
       text-align: center;
@@ -127,12 +129,16 @@ main {
   }
 }
 
+label {
+  color: darkred;
+}
+
 .hidden {
   visibility: hidden !important;
 }
 
 .selectedRow {
-  background-color: hotpink;
+  background-color: burlywood !important;
 }
 
 

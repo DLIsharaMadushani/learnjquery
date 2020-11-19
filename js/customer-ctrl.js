@@ -31,7 +31,7 @@
 
 init();
 
-function init(){
+function init() {
     // Todo: add the initialization code if any
 }
 

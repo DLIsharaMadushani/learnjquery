@@ -20,17 +20,18 @@
     </div>
 </header>
 <main class="container">
-    <div class="row" >
+    <div class="row">
         <div class="col-12 col-lg-4">
             <form>
                 <h3><i class="fas fa-user-tag"></i> Manage Customers</h3>
                 <div class="form-group">
                     <label for="txt-id">Customer ID</label>
-                    <input class="form-control" id="txt-id" placeholder="Eg. C001" type="text" data-dismiss="alert">
+                    <input class="form-control" data-dismiss="alert" id="txt-id" placeholder="Eg. C001" type="text">
                     <small class="form-text text-muted" id="helper-txt-id">
                         The Customer ID should follow the pattern CXXX; X={0-9}
                     </small>
-                    <div id="alert-duplicateId" class="alert alert-danger alert-dismissible fade show" role="alert" hidden>
+                    <div class="alert alert-danger alert-dismissible fade show" hidden id="alert-duplicateId"
+                         role="alert">
                         Duplicate cutomer Id!
                     </div>
                 </div>
@@ -50,32 +51,32 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" id="btn-save" disabled>Save</button>
+                    <button class="btn btn-primary" disabled id="btn-save" type="button">Save</button>
                     <button class="btn btn-danger" id="btn-clear" type="reset">Clear</button>
                 </div>
             </form>
         </div>
         <div class="col-12 col-lg-8 d-flex flex-column align-items-center">
             <div id="tbl-wrapper">
-            <table class="table table-hover table-bordered table-striped" id="tbl-customers">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td class="text-center" colspan="4">
-                        📌 <small>There are no records to show. Add a new customer.</small>
-                    </td>
-                </tr>
-                </tfoot>
-            </table>
+                <table class="table table-hover table-bordered table-striped" id="tbl-customers">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td class="text-center" colspan="4">
+                            📌 <small>There are no records to show. Add a new customer.</small>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
 
             <nav class="hidden" id="page-navigation-bar">
