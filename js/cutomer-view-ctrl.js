@@ -6,6 +6,7 @@ var isCxIdValid=false;
 var isCxNameValid=false;
 var isCxAddValid=false;
 var customers=[];
+var pageSize=-1;
 
 /*===============================================================================
  * Init
@@ -138,27 +139,20 @@ function clearInputs(Customer){
 }
 
 function saveCustomer(customer){
-    var markup = '<tr>' +
-        '<td>'+customer.getId()+'</td>' +
-        '<td>'+customer.getName()+'</td>' +
-        '<td>'+customer.getAddress()+'</td>' +
-        '<td><div class="trash"></div></td>' +
-        '</tr>'
-    $("#tbl-customers tbody").append(markup);
+    createRow(customer);
     customers.push(customer);
     console.log($("tbody").height());
     console.log($("tbody").offset().top);
 
     viewTableFooter();
-    viewPageNavigation()
-    $("#tbl-customers tbody div").click(function (){
-      var row=$(this).parents()[1];
-      deleteCustomer(row);
-    })
+    calculatePageSize()
+    viewPaginations();
+
 }
 
 function deleteCustomer(row){
     var deleteCxId=$(row.firstChild).text();
+    alert("delete cx" + deleteCxId);
     for (var i = 0; i < customers.length; i++) {
         if(customers[i].id === deleteCxId){
             customers.splice(i,1);
@@ -166,7 +160,7 @@ function deleteCustomer(row){
             console.log($("tbody").height());
             $("tbody").offset().top
             viewTableFooter();
-            viewPageNavigation()
+            viewPaginations();
             return ;
         }
     }
@@ -176,13 +170,81 @@ function viewTableFooter(){
     $("#tbl-customers tbody tr").length > 0 ? $("#tbl-customers tfoot").hide(): $("#tbl-customers tfoot").show();
 }
 
-function viewPageNavigation(){
-    var tbodyViewHeight=$("body").height() - $("tbody").offset().top - $("nav").height() - 15;
-    if($("tbody").height() > tbodyViewHeight){
-        $("#page-navigation-bar").removeClass("hidden");
-    }else{
-        $("#page-navigation-bar").addClass("hidden");
+function calculatePageSize(){
+    if(pageSize === -1){
+        var tbodyViewHeight=$("body").height() - $("tbody").offset().top - $("nav").height() - 70;
+        if($("tbody").height() > tbodyViewHeight){
+            pageSize=$("#tbl-customers tbody tr").length;
+            console.log("Page size : "+ pageSize);
+        }
     }
+}
+
+function viewPaginations(){
+    let customersCount = customers.length;
+    if(pageSize === -1 || customersCount <= pageSize) {
+        console.log(pageSize + " *** " + customersCount);
+        renderPage(1);
+        $("#page-navigation-bar").addClass("hidden");
+        return;
+    }
+    var firstPageHtml='<li class="page-item">\n' +
+        '                        <a class="page-link" href="#">\n' +
+        '                            <i class="fas fa-backward"></i>\n' +
+        '                        </a>\n' +
+        '                    </li>\n'+
+        '                    <li class="page-item"><a class="page-link" href="#">1</a></li>\n';
+    var lastPageHtml='<li class="page-item" id="li-forward-pages">\n' +
+        '                        <a class="page-link" href="#">\n' +
+        '                            <i class="fas fa-forward"></i>\n' +
+        '                        </a>\n' +
+        '                    </li>'
+
+
+
+        if(customersCount % pageSize === 1 || customersCount % pageSize === 0){
+            $("#page-navigation-bar ul").empty();
+            var noOfPages=Math.ceil(customersCount/pageSize);
+
+            for (var i = 2; i <= noOfPages; i++) {
+                if(i === noOfPages){
+                    firstPageHtml += '<li class="page-item active"><a class="page-link" href="#">'+i+'</a></li>';
+                    renderPage(noOfPages);
+                }else{
+                    firstPageHtml += '<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>';
+                }
+            }
+            $("#page-navigation-bar ul").append(firstPageHtml+lastPageHtml);
+        }
+
+        $("#page-navigation-bar").removeClass("hidden");
+}
+
+function clearTable(){
+    $("#tbl-customers tbody").empty();
+    $("#tbl-customers tfoot").empty();
+}
+
+function renderPage(activePage){
+    clearTable();
+    for (var i = (activePage-1)*pageSize; i < customers.length; i++) {
+        console.log(customers[i]);
+        createRow(customers[i]);
+    }
+}
+
+function createRow(customer){
+    var markup = '<tr>' +
+        '<td>'+customer.getId()+'</td>' +
+        '<td>'+customer.getName()+'</td>' +
+        '<td>'+customer.getAddress()+'</td>' +
+        '<td><div class="trash"></div></td>' +
+        '</tr>';
+    $("#tbl-customers tbody").append(markup);
+    $("#tbl-customers tbody div").click(function (){
+        var row=$(this).parents()[1];
+        deleteCustomer(row);
+    });
 }
 
 
