@@ -152,13 +152,10 @@ function saveCustomer(customer){
 
 function deleteCustomer(row){
     var deleteCxId=$(row.firstChild).text();
-    alert("delete cx" + deleteCxId);
     for (var i = 0; i < customers.length; i++) {
         if(customers[i].id === deleteCxId){
             customers.splice(i,1);
             $(row).remove();
-            console.log($("tbody").height());
-            $("tbody").offset().top
             viewTableFooter();
             viewPaginations();
             return ;
@@ -192,8 +189,7 @@ function viewPaginations(){
         '                        <a class="page-link" href="#">\n' +
         '                            <i class="fas fa-backward"></i>\n' +
         '                        </a>\n' +
-        '                    </li>\n'+
-        '                    <li class="page-item"><a class="page-link" href="#">1</a></li>\n';
+        '                    </li>\n';
     var lastPageHtml='<li class="page-item" id="li-forward-pages">\n' +
         '                        <a class="page-link" href="#">\n' +
         '                            <i class="fas fa-forward"></i>\n' +
@@ -205,8 +201,16 @@ function viewPaginations(){
         if(customersCount % pageSize === 1 || customersCount % pageSize === 0){
             $("#page-navigation-bar ul").empty();
             var noOfPages=Math.ceil(customersCount/pageSize);
+            var startingPage=1;
+            var currentPageGroup=1;
+            var noOfGroups=1;
+            if(noOfPages > 3){
+                noOfGroups=Math.ceil(noOfPages/5);
+                currentPageGroup=noOfGroups-1;
+                startingPage=currentPageGroup*5 + 1;
+            }
 
-            for (var i = 2; i <= noOfPages; i++) {
+            for (var i = startingPage; i <= noOfPages; i++) {
                 if(i === noOfPages){
                     firstPageHtml += '<li class="page-item active"><a class="page-link" href="#">'+i+'</a></li>';
                     renderPage(noOfPages);
