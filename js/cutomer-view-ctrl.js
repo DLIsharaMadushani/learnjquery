@@ -59,7 +59,7 @@ init();
 
 function init() {
     $("#txt-id").focus();
-    insertTestData();
+    //insertTestData();
 }
 
 /*===============================================================================
@@ -235,15 +235,26 @@ function deleteCustomer(row) {
             customers.splice(i, 1);
             $(row).remove();
             selectPageGroup();
-            viewTableFooter();
             viewPaginations();
+            viewTableFooter();
             return;
         }
     }
 }
 
 function viewTableFooter() {
-    $("#tbl-customers tbody tr").length == 0 ? $("#tbl-customers tfoot").hide() : $("#tbl-customers tfoot").show();
+    if ($("#tbl-customers tbody tr").length > 0){
+        $("#tbl-customers tfoot").hide();
+    }else{
+        $("#tbl-customers tfoot").show()
+        var markup='<tr>\n' +
+            '                        <td class="text-center" colspan="4">\n' +
+            '                            📌 <small>There are no records to show. Add a new customer.</small>\n' +
+            '                        </td>\n' +
+            '                    </tr>';
+        $("#tbl-customers tfoot").append(markup);
+    }
+
 }
 
 function calculatePageSize() {
@@ -359,6 +370,7 @@ function createRow(customer) {
     });
     $("#tbl-customers tbody tr").click(function () {
         let td = $(this).find("td");
+        clearInputs();
         $(updatingRow).removeClass("selectedRow");
         $(this).addClass("selectedRow");
         $("#txt-id").val($(td[0]).text());
