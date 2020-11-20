@@ -59,7 +59,7 @@ init();
 
 function init() {
     $("#txt-id").focus();
-    //insertTestData();
+    insertTestData();
 }
 
 /*===============================================================================
@@ -243,11 +243,11 @@ function deleteCustomer(row) {
 }
 
 function viewTableFooter() {
-    if ($("#tbl-customers tbody tr").length > 0){
+    if ($("#tbl-customers tbody tr").length > 0) {
         $("#tbl-customers tfoot").hide();
-    }else{
+    } else {
         $("#tbl-customers tfoot").show()
-        var markup='<tr>\n' +
+        var markup = '<tr>\n' +
             '                        <td class="text-center" colspan="4">\n' +
             '                            📌 <small>There are no records to show. Add a new customer.</small>\n' +
             '                        </td>\n' +
