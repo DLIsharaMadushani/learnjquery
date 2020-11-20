@@ -243,7 +243,7 @@ function deleteCustomer(row) {
 }
 
 function viewTableFooter() {
-    $("#tbl-customers tbody tr").length > 0 ? $("#tbl-customers tfoot").hide() : $("#tbl-customers tfoot").show();
+    $("#tbl-customers tbody tr").length == 0 ? $("#tbl-customers tfoot").hide() : $("#tbl-customers tfoot").show();
 }
 
 function calculatePageSize() {
